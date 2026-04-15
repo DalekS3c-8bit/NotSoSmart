@@ -1,0 +1,33 @@
+Here is a targeted firewall and DNS blocklist specifically designed to sever your LG TV's connection to the Bright Data (formerly Luminati) residential proxy network. 
+
+Blocking these endpoints will prevent the SDK from initializing on boot, stop the persistent 30-second heartbeat, and block third-party proxy traffic from routing through your home IP address.
+
+### 1. Wildcard Domain Blocks (DNS Level)
+If your firewall or DNS sinkhole (like Pi-hole or AdGuard Home) supports wildcard blocking, add these top-level domains. This is the most effective method as it covers all current and future subdomains:
+*   `*.brdtnet.com` (Blocks proxy registration, HTTP tests, and the actual proxy data channels)
+*   `*.bright-sdk.com` (Blocks SDK client initialization)
+*   `*.brdtest.com` (Blocks device testing endpoints)
+*   `*.l-agent.me` (Blocks error reporting telemetry)
+*   `*.l-err.biz` (Blocks secondary error telemetry)
+*   `*.brdt.io` (Blocks client-side routing, specifically `brd-customer-*.brdt.io`)
+*   `*.luminatinet.com` (Bright Data's legacy infrastructure that is still occasionally referenced)
+
+### 2. Specific Hostname Blocks (If Wildcards Are Not Supported)
+If your router requires exact hostnames, add these specific endpoints observed in your TV's traffic logs:
+*   `clientsdk.bright-sdk.com`
+*   `proxyjs.brdtnet.com`
+*   `http-test1.brdtnet.com`
+*   `clientsdk.brdtnet.com`
+*   `brdtest.com`
+*   `perr.l-agent.me`
+*   `perr.l-err.biz`
+*   `perr.bright-sdk.com`
+
+### 3. Direct IP Address Blocks (Firewall Rules)
+DNS blocking alone is sometimes bypassed if the SDK has hardcoded IP addresses. To guarantee the proxy network is severed, create outbound firewall rules blocking all traffic to these specific AWS and Bright Data IP addresses identified in your network logs:
+*   **`3.33.193.183`** (AWS Global Accelerator IP used for the persistent 30-second heartbeat)
+*   **`15.197.193.114`** (Secondary AWS Global Accelerator IP)
+*   **`65.20.112.124`** (Primary Bright Data proxy channel that routed the bulk of the third-party traffic)
+*   **`45.77.140.108`** (Secondary Bright Data proxy channel)
+*   **`207.148.92.53`** (Secondary Bright Data proxy channel)
+*   **`54.221.247.193`** (AWS IP used to execute the HTTP proxy connectivity test)
