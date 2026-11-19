@@ -1,0 +1,137 @@
+[
+ {
+  "name": "snow/slow/basin/high",
+  "runs": [
+   {
+    "basin_stuck_peak": 37673.83140888697,
+    "basin_stuck_peak_t": "13:04",
+    "basin_vh_stuck": 206766.4969884576,
+    "basin_grid_peak": 24,
+    "basin_grid_link_min": 2628,
+    "resolved": "20:04",
+    "resolve_min_after_reopen": 479,
+    "still_stuck_2200": 0.0,
+    "total_vh": 336906.0758717221,
+    "abandoned": 49973.98384856385
+   },
+   {
+    "basin_stuck_peak": 41761.896781263684,
+    "basin_stuck_peak_t": "16:43",
+    "basin_vh_stuck": 249453.00257584013,
+    "basin_grid_peak": 24,
+    "basin_grid_link_min": 3580,
+    "resolved": "20:12",
+    "resolve_min_after_reopen": 487,
+    "still_stuck_2200": 0.0,
+    "total_vh": 409215.04702628276,
+    "abandoned": 62602.708554429024
+   },
+   {
+    "basin_stuck_peak": 41468.400705041815,
+    "basin_stuck_peak_t": "12:52",
+    "basin_vh_stuck": 263498.3288687047,
+    "basin_grid_peak": 28,
+    "basin_grid_link_min": 4362,
+    "resolved": "20:01",
+    "resolve_min_after_reopen": 476,
+    "still_stuck_2200": 0.0,
+    "total_vh": 440048.7499763513,
+    "abandoned": 72198.9333652145
+   }
+  ],
+  "mean_resolve_min": 480.6666666666667,
+  "mean_peak": 40301.37629839749,
+  "mean_vh": 239905.94281100077,
+  "mean_grid": 3523.3333333333335
+ },
+ {
+  "name": "snow/slow/E18/high",
+  "runs": [
+   {
+    "basin_stuck_peak": 34328.52516835036,
+    "basin_stuck_peak_t": "13:04",
+    "basin_vh_stuck": 190014.4556566759,
+    "basin_grid_peak": 21,
+    "basin_grid_link_min": 2158,
+    "resolved": "20:05",
+    "resolve_min_after_reopen": 480,
+    "still_stuck_2200": 0.0,
+    "total_vh": 314834.78173709934,
+    "abandoned": 43819.11376755783
+   },
+   {
+    "basin_stuck_peak": 39743.212806808486,
+    "basin_stuck_peak_t": "13:04",
+    "basin_vh_stuck": 222551.88941979274,
+    "basin_grid_peak": 27,
+    "basin_grid_link_min": 3530,
+    "resolved": "19:54",
+    "resolve_min_after_reopen": 469,
+    "still_stuck_2200": 0.0,
+    "total_vh": 395637.83850441227,
+    "abandoned": 60680.017266024886
+   },
+   {
+    "basin_stuck_peak": 40443.95798456156,
+    "basin_stuck_peak_t": "16:49",
+    "basin_vh_stuck": 232894.20074856826,
+    "basin_grid_peak": 23,
+    "basin_grid_link_min": 3210,
+    "resolved": "19:58",
+    "resolve_min_after_reopen": 473,
+    "still_stuck_2200": 0.0,
+    "total_vh": 389100.8690113857,
+    "abandoned": 61554.148702584214
+   }
+  ],
+  "mean_resolve_min": 474.0,
+  "mean_peak": 38171.89865324014,
+  "mean_vh": 215153.51527501232,
+  "mean_grid": 2966.0
+ },
+ {
+  "name": "snow/none/basin/high",
+  "runs": [
+   {
+    "basin_stuck_peak": 39113.192888889964,
+    "basin_stuck_peak_t": "12:57",
+    "basin_vh_stuck": 225615.16185819593,
+    "basin_grid_peak": 20,
+    "basin_grid_link_min": 2825,
+    "resolved": "19:58",
+    "resolve_min_after_reopen": 473,
+    "still_stuck_2200": 0.0,
+    "total_vh": 364912.4002491775,
+    "abandoned": 61491.36185950957
+   },
+   {
+    "basin_stuck_peak": 39439.31932419323,
+    "basin_stuck_peak_t": "13:49",
+    "basin_vh_stuck": 247308.89373525497,
+    "basin_grid_peak": 26,
+    "basin_grid_link_min": 3552,
+    "resolved": "19:50",
+    "resolve_min_after_reopen": 465,
+    "still_stuck_2200": 0.0,
+    "total_vh": 400128.65214710956,
+    "abandoned": 69541.2217827349
+   },
+   {
+    "basin_stuck_peak": 39440.83261309812,
+    "basin_stuck_peak_t": "13:29",
+    "basin_vh_stuck": 239345.846158864,
+    "basin_grid_peak": 20,
+    "basin_grid_link_min": 3348,
+    "resolved": "20:02",
+    "resolve_min_after_reopen": 477,
+    "still_stuck_2200": 0.0,
+    "total_vh": 396383.6111414889,
+    "abandoned": 68103.13573113098
+   }
+  ],
+  "mean_resolve_min": 471.6666666666667,
+  "mean_peak": 39331.114942060434,
+  "mean_vh": 237423.30058410496,
+  "mean_grid": 3241.6666666666665
+ }
+]

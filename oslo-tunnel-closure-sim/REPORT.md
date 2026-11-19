@@ -4,6 +4,8 @@
 
 **Tunnels included (16):** Festningstunnelen, Bjørvikatunnelen, Ekebergtunnelen, Svartdalstunnelen, Vålerengatunnelen, Ibsentunnelen, Vaterland/Hammersborg (Ring 1), Brynstunnelen, Lørentunnelen, Tåsentunnelen, Smestadtunnelen, Granfosstunnelen, Furusettunnelen, Bjørnegårdtunnelen (E16), Gjelleråstunnelen (Rv4) and Nordbytunnelen (E6).
 
+> 🔄 **Updated 19.11.2026:** The model has been QA-checked and calibrated against published traffic counts. Updated figures and the worst-case analysis are in **[QA_REPORT.md](QA_REPORT.md)**. Where the numbers below differ, the ones in QA_REPORT.md apply.
+
 > ⚠️ **Read this first.** This is a scenario model built on rounded estimates. It does not use NVDB counts, the regional transport model (RTM) or Ruter data. Use it for the size and shape of the impact and to compare the simulations against each other, not as exact figures. See *Limitations* at the end.
 
 ---
