@@ -38,6 +38,16 @@ JAM_DENSITY = 130.0                   # veh/km/lane
 CAR_OCC = 1.15                        # persons per car (commute peak)
 PACKET_MIN = 2.0                      # emit OD packet when >= 2 vehicles accumulated
 
+# OD adjustment factors from calibrate.py (matrix calibrated to published counts)
+import json as _json
+import os as _os
+_CAL = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "calibration.json")
+OD_FACTORS = _json.load(open(_CAL))["od_factors"] if _os.path.exists(_CAL) else {}
+
+# Areas regarded as "the Oslo basin" (Oslogryta) for gridlock metrics
+BASIN = {"Sentrum", "Indre vest", "Indre øst", "Indre nord", "Ytre vest", "Ytre øst",
+         "Søndre", "Groruddalen"}
+
 
 def clock(t):
     """Convert simulation minute to HH:MM string."""
@@ -250,7 +260,8 @@ class Sim:
         self.ff = {l.id: l.length / (l.ff_kmh * p["speed"]) * 60 for l in self.links}
         self.od, _ = build_od(self.links, self.out_links, scale * p["demand"])
         # per-OD demand noise (day-to-day variation)
-        self.od = {k: v * self.rng.uniform(0.93, 1.07) for k, v in self.od.items()}
+        self.od = {k: v * self.rng.uniform(0.93, 1.07) * OD_FACTORS.get(f"{k[0]}|{k[1]}", 1.0)
+                   for k, v in self.od.items()}
         self.acc = defaultdict(float)
         self.origin_q = defaultdict(deque)
         self.baseline_tt = baseline_tt
@@ -281,6 +292,8 @@ class Sim:
         # bookkeeping
         self.trips = defaultdict(lambda: [0.0, 0.0])   # (o,d,bin) -> [veh, sum_tt]
         self.cancelled = 0.0
+        self.tun_od = defaultdict(float)
+        self.t_now = 0
         self.abandoned = 0.0
         self.postponed = []        # (time, o, d, n)
         self.modeshift = 0.0
@@ -404,6 +417,7 @@ class Sim:
                         l.out_factor = 0.0
                     elif t < self.reopen[tn]:
                         l.out_factor = p["escort_factor"]
+            self.t_now = t
             if t % 5 == 0:
                 self.update_trees(t)
             # ---- demand generation ----
@@ -582,6 +596,8 @@ class Sim:
             l.queued = l.occ
 
     def move_done(self, l, pk, n):
+        if l.tunnel and 60 <= self.t_now < 120:
+            self.tun_od[(l.tunnel, pk[1], pk[2])] += n
         l.budget -= n
         l.occ -= n
         if n >= pk[0] - 1e-9:
@@ -645,6 +661,12 @@ class Sim:
         self.ts["queue_km"].append(sum(min(l.queued / (JAM_DENSITY * l.lanes), l.length)
                                        for l in links))
         self.delay_vh += (in_net + in_orig) / 60.0
+        # vehicles stuck in the Oslo basin: on jammed basin links + waiting on
+        # basin local streets (origin queues)
+        b_jam = sum(l.occ for l in jam if self.road_area[l.id] in BASIN)
+        b_orig = sum(pk[0] for z, oq in self.origin_q.items() if net.NODES[z][3] in BASIN for pk in oq)
+        self.ts["basin_stuck"].append(b_jam + b_orig)
+        self.ts["basin_grid"].append(sum(1 for l in grid if self.road_area[l.id] in BASIN))
         for l in links:
             self.link_tt_hist[l.id, t] = self.link_tt(l)
         if t % 5 == 0:

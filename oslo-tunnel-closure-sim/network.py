@@ -58,11 +58,11 @@ NODES = {
 # ---------------------------------------------------------------------------
 LINKS = [
     # --- E18 west / Operatunnelen system -----------------------------------
-    ("FIL", "BJV", 1.8, 4000, 70, 3, "Festningstunnelen (E18)", "E18"),
-    ("BJV", "SJU", 1.4, 4200, 70, 3, "Bjørvikatunnelen (E18)", "E18"),
-    ("SJU", "RYE", 2.2, 3600, 70, 2, "Ekebergtunnelen (E18/Rv190)", "E18"),
-    ("RYE", "KVA", 2.0, 3400, 70, 2, "Svartdalstunnelen (Rv190)", "Rv190"),
-    ("KVA", "ENS", 1.0, 3000, 60, 2, "Vålerengatunnelen (Rv190)", "Rv190"),
+    ("FIL", "BJV", 1.8, 5000, 70, 3, "Festningstunnelen (E18)", "E18"),
+    ("BJV", "SJU", 1.1, 5400, 70, 3, "Bjørvikatunnelen (E18)", "E18"),
+    ("SJU", "RYE", 1.6, 4000, 70, 2, "Ekebergtunnelen (E18/Rv190)", "E18"),
+    ("RYE", "KVA", 1.3, 3600, 70, 2, "Svartdalstunnelen (E6/Rv190)", "E6"),
+    ("KVA", "ENS", 0.8, 3600, 60, 2, "Vålerengatunnelen (E6)", "E6"),
     ("FIL", "SKO", 3.2, 4400, 70, 3, None, "E18"),
     ("SKO", "LYS", 2.6, 4400, 80, 3, None, "E18"),
     ("LYS", "SAN", 8.5, 5000, 80, 3, None, "E18"),
@@ -89,6 +89,7 @@ LINKS = [
     ("BJV", "SJU", 2.0, 1500, 50, 1, None, "Mosseveien"),
     ("TOY", "VAT", 1.4, 1300, 40, 1, None, "Hovedgater øst"),
     ("ENS", "HEL", 1.2, 1800, 50, 2, None, "Strømsveien"),
+    ("ENS", "OKE", 2.0, 3600, 70, 2, None, "E6 Ensjø–Økern"),
     ("KVA", "HEL", 1.9, 1200, 40, 1, None, "Hovedgater øst"),
     ("MAJ", "SME", 2.0, 1200, 40, 1, None, "Sørkedalsveien"),
     ("SIN", "GRU", 1.6, 1400, 40, 2, None, "Trondheimsveien"),
@@ -98,9 +99,9 @@ LINKS = [
     ("RYE", "MAN", 1.3, 4000, 70, 2, None, "Ring 3/E6"),
     ("MAN", "BRY", 1.4, 4000, 70, 2, "Brynstunnelen (Ring 3/E6)", "Ring 3"),
     ("BRY", "OKE", 2.0, 4000, 70, 2, None, "Ring 3"),
-    ("OKE", "SIN", 1.6, 3600, 70, 2, "Lørentunnelen (Ring 3)", "Ring 3"),
+    ("OKE", "SIN", 1.2, 5000, 70, 3, "Lørentunnelen (Ring 3)", "Ring 3"),
     ("SIN", "STO", 1.4, 4000, 70, 2, None, "Ring 3"),
-    ("STO", "TAS", 1.4, 3600, 70, 2, "Tåsentunnelen (Ring 3)", "Ring 3"),
+    ("STO", "TAS", 1.3, 3600, 70, 2, "Tåsentunnelen (Ring 3)", "Ring 3"),
     ("TAS", "ULL", 1.4, 4000, 70, 2, None, "Ring 3"),
     ("ULL", "SME", 2.4, 3600, 70, 2, "Smestadtunnelen (Ring 3)", "Ring 3"),
     ("SME", "ULN", 2.4, 3600, 70, 2, None, "Ring 3"),
@@ -213,3 +214,42 @@ TRAM_LINES = {
 KEY_TRIPS = [("ASK", "SEN"), ("SAN", "HEL"), ("FOL", "MAJ"), ("LOR", "LYS"),
              ("NIT", "SEN"), ("KLE", "SKO"), ("ROM", "FIL"), ("TAS", "RYE"),
              ("GRO", "ULL"), ("LJA", "SEN")]
+
+
+# ---------------------------------------------------------------------------
+# Published traffic counts used for calibration (ÅDT = annual average daily
+# traffic, both directions). Collected via web search 19.11.2026 because the
+# Statens vegvesen data API / NVDB were not reachable from this environment.
+# quality: A = Statens vegvesen / official, B = official but old or indirect,
+#          C = secondary source (e.g. Wikipedia, press)
+# ---------------------------------------------------------------------------
+COUNTS = {
+    "Bjørvikatunnelen (E18)": (100000, "2023", "B",
+        "Statens vegvesen press release 2023: Operatunnelen >100 000 vehicles/day",
+        "https://www.vegvesen.no/om-oss/presse/aktuelt/2023/01/soker-elektroentreprenor-til-norges-mest-trafikkerte-tunneler/"),
+    "Festningstunnelen (E18)": (80000, "2013", "B",
+        "Statsforvalteren application document: ÅDT ca. 80 000 (2013)",
+        "https://www.statsforvalteren.no/contentassets/18d5fa31e96c422ba60c3af34d920d42/soknad---festningstunnelen.pdf"),
+    "Ekebergtunnelen (E18/Rv190)": (75000, "≈2017", "C",
+        "Teknisk Ukeblad (rehabilitation project): highest level ca. 75 000",
+        "https://www.tu.no/artikler/ekeberg-og-svartdalstunnelene-forbilledlig-tunnelprosjekt/469251"),
+    "Lørentunnelen (Ring 3)": (68240, "2023", "C",
+        "Norwegian Wikipedia: 68 240 (2023)",
+        "https://wikiwand.com/no/articles/L%C3%B8rentunnelen"),
+    "Tåsentunnelen (Ring 3)": (58000, "2018", "B",
+        "Statnett planning note: avg. 58 000 vehicles/day on Ring 3 at Tåsentunnelen",
+        "https://www.statnett.no/globalassets/her-er-vare-prosjekter/region-ost/nettplan-stor-oslo/sogn-ulven/arbeidsfaser-og-konsekvenser-for-3.-part.pdf"),
+    "Vålerengatunnelen (E6)": (56000, "2018", "C",
+        "Teknisk Ukeblad: ÅDT ca. 56 000 (2018)",
+        "https://www.tu.no/artikler/na-blir-det-ko-i-oslo-ett-lop-av-valerengatunnelen-stenges-ett-ar/492359"),
+    "Granfosstunnelen (Rv150)": (28500, "2024", "A",
+        "Statens vegvesen byindeks Oslo 2024: 13 340 + 12 650 light vehicles (<5.6 m); +~8 % heavy",
+        "https://vegvesen.no/globalassets/fag/trafikk/trafikkdata/byindeks_oslo_2018-2024-12.pdf"),
+    "Vaterland-/Hammersborgtunnelen (Ring 1)": (17400, "2019", "A",
+        "Statens vegvesen Ring 1 supplementary traffic analysis: Hammersborgtunnelen 17 400 (2019)",
+        "https://www.vegvesen.no/globalassets/vegprosjekter/utbygging/tunneleroslo/vedlegg/ring-1---supplerende-trafikkanalyse-.pdf"),
+}
+# Weekday AM peak hour (both directions) as share of ÅDT. Typical Norwegian
+# urban main roads: 7-10 % of ÅDT in the peak hour; weekday traffic ~8 % above
+# ÅDT. Assumption: 0.085 * 1.08 ≈ 0.092.
+PEAK_HOUR_SHARE = 0.092
